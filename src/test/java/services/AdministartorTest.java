@@ -19,7 +19,7 @@ public class AdministartorTest {
 		Administrator a=new Administrator();
 		a.setPassword("esprit");
 		a.setName("hedhly");
-		a.setFirstName("salah");
+		a.setFirstName("hamza");
 		a.setEmail("h@h.com");
 		assertEquals(true, AdministratorServiceDelegate.addAdministrator(a)); 
 	}
