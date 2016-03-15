@@ -39,4 +39,9 @@ public class _3DMovieTheaterServiceDelegate {
 	public static List<_3DMovieTheater> get_3DMovieTheatersByManager(Manager m){
 		return getProxy().get_3DMovieTheatersByManager(m);
 	}
+	
+	public static List<_3DMovieTheater> get_3DMovieTheaterByAddressLike(String address){
+		return getProxy().get_3DMovieTheaterByAddressLike(address);
+	}
+	
 }

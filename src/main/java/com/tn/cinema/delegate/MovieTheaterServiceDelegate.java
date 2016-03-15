@@ -38,5 +38,9 @@ public class MovieTheaterServiceDelegate {
 	public static List<MovieTheater> getMovieTheatersByManager(Manager m){
 		return getProxy().getMovieTheatersByManager(m);
 	}
+
+	public static List<MovieTheater> getMovieTheatersByAddressLike(String address){
+		return getProxy().getMovieTheatersByAddressLike(address);
+	}
 	
 }

@@ -60,4 +60,10 @@ public class _3DMovieTheaterTest {
 		_3DMovieTheater mt = _3DMovieTheaterServiceDelegate.find_3DMovieTheaterByID(6);
 		assertEquals(true,_3DMovieTheaterServiceDelegate.delete_3DMovieTheater(mt));
 	}
+	
+	@Test
+	@Ignore
+	public void get_3DMovieTheatersByAddressLikeTest(){
+		System.out.println(_3DMovieTheaterServiceDelegate.get_3DMovieTheaterByAddressLike("a").get(0).getAdresse());
+	}
 }

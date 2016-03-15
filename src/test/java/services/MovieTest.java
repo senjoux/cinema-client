@@ -14,9 +14,9 @@ public class MovieTest {
 	@Ignore
 	public void addMovie() {
 		Movie m=new Movie();
-		m.setTitle("spiderman");
+		m.setTitle("x-men");
 		m.setLength(120L);
-		m.setType("adventure");
+		m.setType("action, thriller");
 		assertEquals(true,MovieServiceDelegate.addMovie(m));
 	}
 	
