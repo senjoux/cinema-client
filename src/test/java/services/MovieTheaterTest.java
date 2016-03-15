@@ -58,4 +58,10 @@ public class MovieTheaterTest {
 		MovieTheater mt = MovieTheaterServiceDelegate.findMovieTheaterByID(3);
 		assertEquals(true,MovieTheaterServiceDelegate.deleteMovieTheater(mt));
 	}
+	
+	@Test
+	@Ignore
+	public void getMovieTheatersByAddressLikeTest(){
+		System.out.println(MovieTheaterServiceDelegate.getMovieTheatersByAddressLike("m").get(0).getAdresse());
+	}
 }
