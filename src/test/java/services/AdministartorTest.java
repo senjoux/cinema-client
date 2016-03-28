@@ -2,6 +2,8 @@ package services;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,8 +21,10 @@ public class AdministartorTest {
 		Administrator a=new Administrator();
 		a.setPassword("esprit");
 		a.setName("hedhly");
-		a.setFirstName("hamza");
-		a.setEmail("h@h.com");
+		a.setFirstName("foulen");
+		a.setEmail("f@f.com");
+		a.setMobilePhone(12345678L);
+		a.setImage(convertToBytes(loadFile("defaultUser.png")));
 		assertEquals(true, AdministratorServiceDelegate.addAdministrator(a)); 
 	}
 
@@ -34,7 +38,8 @@ public class AdministartorTest {
 	@Ignore
 	public void updateAdministrator() {
 		Administrator a=AdministratorServiceDelegate.findAdministratorByID(1);
-		a.setName("elhedhly");
+		//a.setLocked(false);
+		a.setImage(convertToBytes(loadFile("hamza.jpg")));
 		assertEquals(true, AdministratorServiceDelegate.updateAdministrator(a)); 
 	}
 	
@@ -66,5 +71,23 @@ public class AdministartorTest {
 		assertEquals((Integer)1, a.getId());
 	}
 	
+	public File loadFile(String path){
+		ClassLoader classLoader = getClass().getClassLoader();
+		return new File(classLoader.getResource(path).getFile());
+	}
+	
+	public byte[] convertToBytes(File file){
+		 byte[] bFile = new byte[(int) file.length()];
+	        
+	        try {
+		     FileInputStream fileInputStream = new FileInputStream(file);
+		     //convert file into array of bytes
+		     fileInputStream.read(bFile);
+		     fileInputStream.close();
+	        } catch (Exception e) {
+		     e.printStackTrace();
+	        }
+	     return bFile;   
+	}
 	
 }
