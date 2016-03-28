@@ -39,6 +39,30 @@
 		</dependency>
 
 		<dependency>
+			<groupId>de.sciss</groupId>
+			<artifactId>weblaf-ui</artifactId>
+			<version>1.28</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.maps</groupId>
+			<artifactId>google-maps-services</artifactId>
+			<version>0.1.12</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.tn.cinema</groupId>
 			<artifactId>cinema-ejb</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -46,4 +70,9 @@
 		</dependency>
 	</dependencies>
 
+	<name>MallaFilm</name>
+	<scm>
+		<url>https://tn.linkedin.com/in/hedhly</url>
+		<developerConnection>Hedhly Hamza</developerConnection>
+	</scm>
 </project>

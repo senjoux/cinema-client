@@ -2,6 +2,9 @@ package services;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -16,8 +19,10 @@ public class ManagerTest {
 		Manager m=new Manager();
 		m.setFirstName("hassen");
 		m.setName("hedhly");
-		m.setEmail("x@x.com");
-		m.setPassword("abc");	
+		m.setEmail("s@s.com");
+		m.setPassword("esprit");
+		m.setMobilePhone(55539159L);
+		m.setImage(convertToBytes(loadFile("defaultUser.png")));
 		assertEquals(true, ManagerServiceDelegate.addManager(m));
 	}
 	
@@ -58,5 +63,24 @@ public class ManagerTest {
 	@Ignore
 	public void findManagerByEmailAndPassword(){
 		assertEquals("hssouna",ManagerServiceDelegate.findManagerByEmailAndPassword("m@m.com","abc").getFirstName());
+	}
+	
+	public File loadFile(String path){
+		ClassLoader classLoader = getClass().getClassLoader();
+		return new File(classLoader.getResource(path).getFile());
+	}
+	
+	public byte[] convertToBytes(File file){
+		 byte[] bFile = new byte[(int) file.length()];
+	        
+	        try {
+		     FileInputStream fileInputStream = new FileInputStream(file);
+		     //convert file into array of bytes
+		     fileInputStream.read(bFile);
+		     fileInputStream.close();
+	        } catch (Exception e) {
+		     e.printStackTrace();
+	        }
+	     return bFile;   
 	}
 }
