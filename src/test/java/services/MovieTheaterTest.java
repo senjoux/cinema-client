@@ -16,11 +16,11 @@ public class MovieTheaterTest {
 	@Ignore
 	public void addMovieTheater() {
 		MovieTheater mt = new MovieTheater();
-		Manager m = ManagerServiceDelegate.findManagerByID(3);
+		Manager m = ManagerServiceDelegate.findManagerByID(13);
 		mt.setManager(m);
-		mt.setAdresse("XXX, xx");
+		mt.setAdresse("bizerte, rue xx");
 		mt.setName("CCC");
-		mt.setCapacity(10L);
+		mt.setCapacity(300L);
 		assertEquals(true, MovieTheaterServiceDelegate.addMovieTheater(mt));
 	}
 

@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import com.tn.cinema.delegate.AdministratorServiceDelegate;
 import com.tn.cinema.entities.Administrator;
+import com.tn.cinema.utility.Utils;
 
 public class AdministratorsModel extends AbstractTableModel {
 
@@ -16,6 +17,14 @@ public class AdministratorsModel extends AbstractTableModel {
 
 	public AdministratorsModel() {
 		administrators = AdministratorServiceDelegate.findAllAdministrators();
+		fireTableDataChanged();
+		System.out.println(administrators.size() + " administartors");
+
+	}
+	
+	public AdministratorsModel(String X) {
+		administrators = Utils.fetchAdminsByCriteria(AdministratorServiceDelegate.findAllAdministrators(), X);
+		fireTableDataChanged();
 		System.out.println(administrators.size() + " administartors");
 
 	}
@@ -67,5 +76,10 @@ public class AdministratorsModel extends AbstractTableModel {
 			selectedAdministrator = administrators.get(rowIndex);
 		}
 	}
-
+	
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		 return getValueAt(0, columnIndex).getClass();
+	}
+	
 }

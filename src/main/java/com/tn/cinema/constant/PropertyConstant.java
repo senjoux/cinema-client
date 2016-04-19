@@ -1,6 +1,5 @@
 package com.tn.cinema.constant;
 
-import javax.swing.ImageIcon;
 
 public class PropertyConstant {
 
@@ -18,5 +17,6 @@ public class PropertyConstant {
     public final static String PASSWORD="Password";
     public final static String VALIDATE_PASSWORD="Validate password";
     public final static String UPLOAD="Upload";
+    public final static String NEXT="Next";
         
 }

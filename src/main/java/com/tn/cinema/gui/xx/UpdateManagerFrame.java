@@ -1,10 +1,11 @@
-package com.tn.cinema.gui;
+package com.tn.cinema.gui.xx;
 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -16,19 +17,25 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.alee.extended.button.WebSwitch;
 import com.alee.extended.image.WebDecoratedImage;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.filechooser.WebFileChooser;
+import com.alee.laf.label.WebLabel;
 import com.alee.laf.text.WebPasswordField;
 import com.alee.laf.text.WebTextField;
 import com.tn.cinema.constant.PropertyConstant;
 import com.tn.cinema.controller.SuperAdminController;
+import com.tn.cinema.delegate.AdministratorServiceDelegate;
+import com.tn.cinema.delegate.ManagerServiceDelegate;
+import com.tn.cinema.entities.Administrator;
+import com.tn.cinema.entities.Manager;
 import com.tn.cinema.utility.NotificationsManager;
+import com.tn.cinema.utility.Utils;
 import com.tn.cinema.utility.ValidatorsManager;
 
-@SuppressWarnings("serial")
-public class NewAdminFrame extends JFrame {
+public class UpdateManagerFrame extends JFrame {
 
 	private JPanel contentPane;
 	private WebTextField txtFirstName;
@@ -37,11 +44,14 @@ public class NewAdminFrame extends JFrame {
 	private WebTextField txtEmail;
 	private WebPasswordField txtPassword;
 	private WebPasswordField txtValidatePassword;
-	private File file = null;
+	private WebSwitch wsIsLocked;
+	private JLabel lblIsLocked;
 	private WebButton btnChoose;
-	WebDecoratedImage profileImg;
+	private WebDecoratedImage profileImg;
 	private WebButton btnCancel;
 	private WebButton btnSave;
+	private boolean imageChanged;
+	private File file = null;
 
 	/**
 	 * Launch the application.
@@ -49,9 +59,10 @@ public class NewAdminFrame extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				WebLookAndFeel.install();
 				try {
-					NewAdminFrame frame = new NewAdminFrame();
-					WebLookAndFeel.install();
+					UpdateManagerFrame frame = new UpdateManagerFrame(
+							ManagerServiceDelegate.findManagerByID(13));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,20 +74,23 @@ public class NewAdminFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewAdminFrame() {
-		setBounds(100, 100, 444, 270);
-		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+	public UpdateManagerFrame(Manager m) {
+		setBounds(100, 100, 444, 296);
+		// setDefaultCloseOperation(EXIT_ON_CLOSE);
 		ImageIcon frameIcon = new ImageIcon(getClass().getResource("/images/bobines-video-icon.png"));
 		this.setIconImage(frameIcon.getImage());
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+
+		BufferedImage image = null;
+		image = Utils.convertToImage(m.getImage());
 		contentPane.setLayout(null);
-		file=new File(NewAdminFrame.class.getResource("/images/defaultUser.png").getFile());
-		ImageIcon defaultUserIcon = new ImageIcon(getClass().getResource("/images/defaultUser.png"));
-		profileImg = new WebDecoratedImage(defaultUserIcon);
-		profileImg.setLocation(278, 29);
-		profileImg.setSize(134, 122);
+
+		profileImg = new WebDecoratedImage();
+		profileImg.setBounds(278, 29, 134, 122);
+		profileImg.setImage(image.getScaledInstance(134, 122, Image.SCALE_DEFAULT));
 		contentPane.add(profileImg);
 
 		JLabel lblFirstName = new JLabel(PropertyConstant.FIRST_NAME);
@@ -92,52 +106,52 @@ public class NewAdminFrame extends JFrame {
 		contentPane.add(lblMobilePhone);
 
 		JLabel lblEmail = new JLabel(PropertyConstant.EMAIL);
-		lblEmail.setBounds(10, 122, 65, 14);
+		lblEmail.setBounds(10, 107, 65, 14);
 		contentPane.add(lblEmail);
 
 		JLabel lblPassword = new JLabel(PropertyConstant.PASSWORD);
-		lblPassword.setBounds(10, 147, 65, 14);
+		lblPassword.setBounds(10, 137, 65, 14);
 		contentPane.add(lblPassword);
 
 		JLabel lblValidatePassword = new JLabel(PropertyConstant.VALIDATE_PASSWORD);
-		lblValidatePassword.setBounds(10, 167, 108, 33);
+		lblValidatePassword.setBounds(10, 156, 108, 33);
 		contentPane.add(lblValidatePassword);
 
-		txtFirstName = new WebTextField();
-		txtFirstName.setBounds(124, 29, 116, 23);
+		txtFirstName = new WebTextField(m.getFirstName());
+		txtFirstName.setBounds(124, 29, 116, 20);
 		contentPane.add(txtFirstName);
 		txtFirstName.setColumns(10);
 
-		txtName = new WebTextField();
-		txtName.setBounds(124, 54, 116, 23);
+		txtName = new WebTextField(m.getName());
+		txtName.setBounds(124, 54, 116, 20);
 		contentPane.add(txtName);
 		txtName.setColumns(10);
 
-		txtMobilePhone = new WebTextField();
-		txtMobilePhone.setBounds(124, 79, 116, 23);
+		txtMobilePhone = new WebTextField(m.getMobilePhone().toString());
+		txtMobilePhone.setBounds(124, 79, 116, 20);
 		contentPane.add(txtMobilePhone);
 		txtMobilePhone.setColumns(10);
 
-		txtEmail = new WebTextField();
-		txtEmail.setBounds(124, 119, 116, 23);
+		txtEmail = new WebTextField(m.getEmail());
+		txtEmail.setBounds(124, 104, 116, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 
 		txtPassword = new WebPasswordField();
-		txtPassword.setBounds(124, 144, 116, 20);
+		txtPassword.setBounds(124, 134, 116, 20);
 		contentPane.add(txtPassword);
 		txtPassword.setColumns(10);
 
 		txtValidatePassword = new WebPasswordField();
-		txtValidatePassword.setBounds(124, 173, 116, 20);
+		txtValidatePassword.setBounds(124, 162, 116, 20);
 		contentPane.add(txtValidatePassword);
 		txtValidatePassword.setColumns(10);
 
 		btnChoose = new WebButton(PropertyConstant.UPLOAD + " Picture");
+		btnChoose.setBounds(290, 172, 108, 23);
 		btnChoose.addActionListener(new ActionListener() {
 			private JFileChooser imageChooser = null;
 			private ImageIcon image = null;
-
 			public void actionPerformed(ActionEvent e) {
 				if (imageChooser == null) {
 					imageChooser = new JFileChooser();
@@ -149,7 +163,7 @@ public class NewAdminFrame extends JFrame {
 				if (file != null) {
 					imageChooser.setSelectedFile(file);
 				}
-				if (imageChooser.showOpenDialog(NewAdminFrame.this) == WebFileChooser.APPROVE_OPTION) {
+				if (imageChooser.showOpenDialog(UpdateManagerFrame.this) == WebFileChooser.APPROVE_OPTION) {
 					file = imageChooser.getSelectedFile();
 
 					// i ve choosen max size of file = 1024*1024*1.5 = 1572864 =
@@ -159,30 +173,28 @@ public class NewAdminFrame extends JFrame {
 					} else {
 						image = new ImageIcon(file.getAbsolutePath());
 						profileImg.setImage(image.getImage().getScaledInstance(134, 122, Image.SCALE_DEFAULT));
+						imageChanged = true;
 					}
 
 				}
 			}
 		});
-
-		btnChoose.setBounds(290, 172, 108, 23);
 		contentPane.add(btnChoose);
 
 		btnCancel = new WebButton(PropertyConstant.CANCEL,
 				new ImageIcon(getClass().getResource("/images/Cancel-icon.png")));
+		btnCancel.setBounds(321, 237, 91, 23);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SuperAdminController.disposeNewAdminFrame();
+				SuperAdminController.diposeUpdateManagerFrame();
 			}
 		});
-		btnCancel.setBounds(321, 210, 91, 23);
 		contentPane.add(btnCancel);
 
 		btnSave = new WebButton(PropertyConstant.SAVE, new ImageIcon(getClass().getResource("/images/Ok-icon.png")));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (txtFirstName.getText().isEmpty() || txtName.getText().isEmpty() || txtEmail.getText().isEmpty()
-						|| (txtPassword.getPassword().length == 0) || (txtValidatePassword.getPassword().length == 0)) {
+				if (txtFirstName.getText().isEmpty() || txtName.getText().isEmpty() || txtEmail.getText().isEmpty()) {
 					txtFirstName.setBorder(BorderFactory.createLineBorder(Color.RED));
 					txtName.setBorder(BorderFactory.createLineBorder(Color.RED));
 					txtEmail.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -196,25 +208,48 @@ public class NewAdminFrame extends JFrame {
 						if (ValidatorsManager.validateFields(txtFirstName.getText(), txtName.getText(),
 								txtEmail.getText(), String.valueOf(txtPassword.getPassword()),
 								txtMobilePhone.getText())) {
-							boolean res=SuperAdminController.insertAdmin(txtFirstName.getText(), txtName.getText(),
+							boolean res=SuperAdminController.updateManager(m,txtFirstName.getText(), txtName.getText(),
 									txtEmail.getText(), String.valueOf(txtPassword.getPassword()),
-									txtMobilePhone.getText(), file);
-							if(res){
-								NotificationsManager.displayInsertSuccessPopUp("Admin");
+									txtMobilePhone.getText(),file,imageChanged,wsIsLocked.isSelected());
+							if (res) {
+								NotificationsManager.displayUpdateSuccessPopUp("Manager");
 								SuperAdminController.loadAdmins();
-							}else {
-								NotificationsManager.displayInsertErrorPopUp("admin");
+								
+							} else {
+								NotificationsManager.displayUpdateErrorPopUp("manager");
 							}
-						} else {
+						}else{
 							NotificationsManager.displayInputsErrorPopUp();
 						}
 					}
-
 				}
 			}
 		});
-		btnSave.setBounds(225, 210, 91, 23);
+		btnSave.setBounds(222, 237, 91, 23);
 		contentPane.add(btnSave);
-		setResizable(false);
+
+		lblIsLocked = new JLabel("Locked");
+		lblIsLocked.setBounds(10, 193, 46, 20);
+		contentPane.add(lblIsLocked);
+		wsIsLocked = new WebSwitch();
+		wsIsLocked.setLocation(124, 193);
+		wsIsLocked.setSize(65, 23);
+		wsIsLocked.setRound(8);
+		wsIsLocked
+				.setLeftComponent(createSwitchIcon(new ImageIcon(getClass().getResource("/images/tiny_on.png")), 4, 0));
+		wsIsLocked.setRightComponent(
+				createSwitchIcon(new ImageIcon(getClass().getResource("/images/tiny_off.png")), 0, 4));
+		wsIsLocked.setSelected(m.isLocked());
+		System.out.println(wsIsLocked.isSelected());
+		contentPane.add(wsIsLocked);
+
 	}
+
+	private WebLabel createSwitchIcon(ImageIcon icon, final int left, final int right) {
+		final WebLabel rightComponent = new WebLabel(icon, WebLabel.CENTER);
+		rightComponent.setMargin(2, left, 2, right);
+		return rightComponent;
+	}
+	
+	
 }
