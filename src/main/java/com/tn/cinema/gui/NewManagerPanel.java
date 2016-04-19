@@ -1,7 +1,6 @@
 package com.tn.cinema.gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,27 +9,22 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.alee.extended.image.WebDecoratedImage;
-import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.filechooser.WebFileChooser;
 import com.alee.laf.text.WebPasswordField;
 import com.alee.laf.text.WebTextField;
 import com.tn.cinema.constant.PropertyConstant;
-import com.tn.cinema.controller.SuperAdminController;
+import com.tn.cinema.controller.ManagerController;
 import com.tn.cinema.utility.NotificationsManager;
 import com.tn.cinema.utility.ValidatorsManager;
 
-@SuppressWarnings("serial")
-public class NewAdminFrame extends JFrame {
+public class NewManagerPanel extends JPanel {
 
-	private JPanel contentPane;
 	private WebTextField txtFirstName;
 	private WebTextField txtName;
 	private WebTextField txtMobilePhone;
@@ -42,95 +36,68 @@ public class NewAdminFrame extends JFrame {
 	WebDecoratedImage profileImg;
 	private WebButton btnCancel;
 	private WebButton btnSave;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewAdminFrame frame = new NewAdminFrame();
-					WebLookAndFeel.install();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public NewAdminFrame() {
-		setBounds(100, 100, 444, 270);
-		//setDefaultCloseOperation(EXIT_ON_CLOSE);
-		ImageIcon frameIcon = new ImageIcon(getClass().getResource("/images/bobines-video-icon.png"));
-		this.setIconImage(frameIcon.getImage());
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		file=new File(NewAdminFrame.class.getResource("/images/defaultUser.png").getFile());
+	
+	public NewManagerPanel() {
+		setLayout(null);
+		file = new File(NewAdminFrame.class.getResource("/images/defaultUser.png").getFile());
 		ImageIcon defaultUserIcon = new ImageIcon(getClass().getResource("/images/defaultUser.png"));
 		profileImg = new WebDecoratedImage(defaultUserIcon);
 		profileImg.setLocation(278, 29);
 		profileImg.setSize(134, 122);
-		contentPane.add(profileImg);
-
+		add(profileImg);
+		
 		JLabel lblFirstName = new JLabel(PropertyConstant.FIRST_NAME);
 		lblFirstName.setBounds(10, 32, 65, 14);
-		contentPane.add(lblFirstName);
+		add(lblFirstName);
 
 		JLabel lblName = new JLabel(PropertyConstant.NAME);
 		lblName.setBounds(10, 57, 65, 14);
-		contentPane.add(lblName);
+		add(lblName);
 
 		JLabel lblMobilePhone = new JLabel(PropertyConstant.MOBILE_PHONE);
 		lblMobilePhone.setBounds(10, 82, 108, 14);
-		contentPane.add(lblMobilePhone);
+		add(lblMobilePhone);
 
 		JLabel lblEmail = new JLabel(PropertyConstant.EMAIL);
 		lblEmail.setBounds(10, 122, 65, 14);
-		contentPane.add(lblEmail);
+		add(lblEmail);
 
 		JLabel lblPassword = new JLabel(PropertyConstant.PASSWORD);
 		lblPassword.setBounds(10, 147, 65, 14);
-		contentPane.add(lblPassword);
+		add(lblPassword);
 
 		JLabel lblValidatePassword = new JLabel(PropertyConstant.VALIDATE_PASSWORD);
 		lblValidatePassword.setBounds(10, 167, 108, 33);
-		contentPane.add(lblValidatePassword);
+		add(lblValidatePassword);
 
 		txtFirstName = new WebTextField();
 		txtFirstName.setBounds(124, 29, 116, 23);
-		contentPane.add(txtFirstName);
+		add(txtFirstName);
 		txtFirstName.setColumns(10);
 
 		txtName = new WebTextField();
 		txtName.setBounds(124, 54, 116, 23);
-		contentPane.add(txtName);
+		add(txtName);
 		txtName.setColumns(10);
 
 		txtMobilePhone = new WebTextField();
 		txtMobilePhone.setBounds(124, 79, 116, 23);
-		contentPane.add(txtMobilePhone);
+		add(txtMobilePhone);
 		txtMobilePhone.setColumns(10);
 
 		txtEmail = new WebTextField();
 		txtEmail.setBounds(124, 119, 116, 23);
-		contentPane.add(txtEmail);
+		add(txtEmail);
 		txtEmail.setColumns(10);
 
 		txtPassword = new WebPasswordField();
 		txtPassword.setBounds(124, 144, 116, 20);
-		contentPane.add(txtPassword);
+		add(txtPassword);
 		txtPassword.setColumns(10);
 
 		txtValidatePassword = new WebPasswordField();
 		txtValidatePassword.setBounds(124, 173, 116, 20);
-		contentPane.add(txtValidatePassword);
+		add(txtValidatePassword);
 		txtValidatePassword.setColumns(10);
 
 		btnChoose = new WebButton(PropertyConstant.UPLOAD + " Picture");
@@ -149,7 +116,7 @@ public class NewAdminFrame extends JFrame {
 				if (file != null) {
 					imageChooser.setSelectedFile(file);
 				}
-				if (imageChooser.showOpenDialog(NewAdminFrame.this) == WebFileChooser.APPROVE_OPTION) {
+				if (imageChooser.showOpenDialog(getParent()) == WebFileChooser.APPROVE_OPTION) {
 					file = imageChooser.getSelectedFile();
 
 					// i ve choosen max size of file = 1024*1024*1.5 = 1572864 =
@@ -166,17 +133,17 @@ public class NewAdminFrame extends JFrame {
 		});
 
 		btnChoose.setBounds(290, 172, 108, 23);
-		contentPane.add(btnChoose);
+		add(btnChoose);
 
 		btnCancel = new WebButton(PropertyConstant.CANCEL,
 				new ImageIcon(getClass().getResource("/images/Cancel-icon.png")));
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SuperAdminController.disposeNewAdminFrame();
+				ManagerController.disposeNewManagerFrame();
 			}
 		});
 		btnCancel.setBounds(321, 210, 91, 23);
-		contentPane.add(btnCancel);
+		add(btnCancel);
 
 		btnSave = new WebButton(PropertyConstant.SAVE, new ImageIcon(getClass().getResource("/images/Ok-icon.png")));
 		btnSave.addActionListener(new ActionListener() {
@@ -196,15 +163,10 @@ public class NewAdminFrame extends JFrame {
 						if (ValidatorsManager.validateFields(txtFirstName.getText(), txtName.getText(),
 								txtEmail.getText(), String.valueOf(txtPassword.getPassword()),
 								txtMobilePhone.getText())) {
-							boolean res=SuperAdminController.insertAdmin(txtFirstName.getText(), txtName.getText(),
+							/*boolean res = ManagerController.insertManager(txtFirstName.getText(), txtName.getText(),
 									txtEmail.getText(), String.valueOf(txtPassword.getPassword()),
-									txtMobilePhone.getText(), file);
-							if(res){
-								NotificationsManager.displayInsertSuccessPopUp("Admin");
-								SuperAdminController.loadAdmins();
-							}else {
-								NotificationsManager.displayInsertErrorPopUp("admin");
-							}
+									txtMobilePhone.getText(), file);*/
+							
 						} else {
 							NotificationsManager.displayInputsErrorPopUp();
 						}
@@ -214,7 +176,8 @@ public class NewAdminFrame extends JFrame {
 			}
 		});
 		btnSave.setBounds(225, 210, 91, 23);
-		contentPane.add(btnSave);
-		setResizable(false);
+		add(btnSave);
+
 	}
+
 }

@@ -21,8 +21,10 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.notification.NotificationIcon;
 import com.alee.managers.notification.WebNotificationPopup;
 import com.alee.managers.style.skin.web.WebLabelPainter;
-import com.tn.cinema.controller.LoginController;
+import com.tn.cinema.controller.MainController;
+import com.tn.cinema.controller.ManagerController;
 import com.tn.cinema.entities.User;
+import com.tn.cinema.utility.ValidatorsManager;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -76,6 +78,12 @@ public class LoginFrame extends WebFrame {
 
 		// btn sign up
 		btnSignUp = new WebButton("Sign Up", new ImageIcon(getClass().getResource("/images/star-icon.png")));
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ManagerController.showNewManagerFrame();
+				dispose();
+			}
+		});
 		btnSignUp.setLocation(322, 36);
 		btnSignUp.setSize(98, 24);
 		contentPane.add(btnSignUp);
@@ -109,11 +117,11 @@ public class LoginFrame extends WebFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(txtEmail.getText().isEmpty() || String.valueOf(txtPassword.getPassword()).isEmpty() 
-												|| !LoginController.validateEmail(txtEmail.getText())){
+												|| !ValidatorsManager.validateEmail(txtEmail.getText())){
 					txtEmail.setBorder(BorderFactory.createLineBorder(Color.RED));
 					txtPassword.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
-					LoginController.loginDispatcher(txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
+					MainController.loginDispatcher(txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
 				}
 			}
 		});
@@ -141,10 +149,6 @@ public class LoginFrame extends WebFrame {
 		lblSignUpContainer.setPainter(new WebLabelPainter(new TitledBorderPainter(" New here ?"))).setMargin(5);
 		contentPane.add(lblSignUpContainer);
 
-		//
-		WebNotificationPopup notificationPopup = new WebNotificationPopup ();
-        notificationPopup.setIcon( NotificationIcon.error);
-        notificationPopup.setDisplayTime ( 5000 );
-
+		
 	}
 }

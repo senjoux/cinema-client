@@ -52,7 +52,7 @@ public class AdministartorTest {
 	@Test
 	@Ignore
 	public void deleteAdministrator(){
-		Administrator a=AdministratorServiceDelegate.findAdministratorByID(2);
+		Administrator a=AdministratorServiceDelegate.findAdministratorByID(6);
 		assertEquals(true,AdministratorServiceDelegate.deleteAdministrator(a));
 	}
 	

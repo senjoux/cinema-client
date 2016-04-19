@@ -2,6 +2,8 @@ package utility;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -48,6 +50,7 @@ public class UtilityTest {
 	
 	// my api key =  AIzaSyBNrMWXINCTgvQuygjhIZ4bydgJWhN5eLA 
 	@Test
+	@Ignore
 	public void geocodingAPITest(){
 		GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyBNrMWXINCTgvQuygjhIZ4bydgJWhN5eLA");
 		GeocodingResult[] results=null;
@@ -67,4 +70,5 @@ public class UtilityTest {
 
 	}
 
+	
 }
