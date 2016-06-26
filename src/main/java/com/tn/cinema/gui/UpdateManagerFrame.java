@@ -1,4 +1,4 @@
-package com.tn.cinema.gui.xx;
+package com.tn.cinema.gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -53,24 +53,7 @@ public class UpdateManagerFrame extends JFrame {
 	private boolean imageChanged;
 	private File file = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				WebLookAndFeel.install();
-				try {
-					UpdateManagerFrame frame = new UpdateManagerFrame(
-							ManagerServiceDelegate.findManagerByID(13));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */

@@ -31,7 +31,7 @@ public class ValidatorsManager {
 		return pwd1.equals(pwd2);
 	}
 
-	public static boolean validateLongAsString(String text) {
+	public static boolean validateStringAsLong(String text) {
 		boolean res = false;
 		try {
 			Long.parseLong(text);

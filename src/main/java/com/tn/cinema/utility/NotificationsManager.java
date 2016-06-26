@@ -37,7 +37,7 @@ public class NotificationsManager {
 	public static void displayInputsErrorPopUp() {
 		WebNotificationPopup notificationPopup = new WebNotificationPopup();
 		notificationPopup.setIcon(NotificationIcon.error);
-		notificationPopup.setContent("Please insert some valide data (Email, Phone number ..)");
+		notificationPopup.setContent("Please insert some valide data");
 		notificationPopup.setSize(120, 120);
 		notificationPopup.setDisplayTime(3000);
 		NotificationManager.showNotification(notificationPopup);

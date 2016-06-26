@@ -13,15 +13,8 @@ public class ManagerController {
 	private static NewManagerFrame newManagerFrame;
 	private static NewMovieTheaterFrame newMovieTheaterFrame;
 	
-	public ManagerController(/*boolean isNew*/) {
-		/*
-		if (isNew) {
-			newManagerFrame=new NewManagerFrame();
-			newManagerFrame.setVisible(true);
-		}else {
-			System.out.println("display manager gui to manage his theaters ...");
-		}
-		*/
+	public ManagerController() {
+	
 	}
 	
 	// ******************* navigation *******************************
@@ -36,15 +29,6 @@ public class ManagerController {
 	
 	public static void disposeNewManagerFrame() {
 		newManagerFrame.dispose();
-	}
-	
-	public static void showNewMovieTheaterFrame(Manager m) {
-		if (newMovieTheaterFrame == null) {
-			newMovieTheaterFrame = new NewMovieTheaterFrame(m);
-			newMovieTheaterFrame.setVisible(true);
-		} else {
-			newMovieTheaterFrame.setVisible(true);
-		}
 	}
 	
 	// **********************new manager
@@ -74,5 +58,7 @@ public class ManagerController {
 			m.setImage(Utils.convertToBytes(profileImg));
 			return m;
 		}
+		
+		
 		
 }

@@ -34,7 +34,7 @@ import com.tn.cinema.utility.NotificationsManager;
 import com.tn.cinema.utility.Utils;
 import com.tn.cinema.utility.ValidatorsManager;
 
-public class NewMovieTheaterFrame extends JFrame {
+public class Update3DMovieTheaterFrame extends JFrame {
 
 	private JPanel newMovieTheaterPanel;
 	private WebTextField txtName;
@@ -49,11 +49,11 @@ public class NewMovieTheaterFrame extends JFrame {
 	private JLabel lbldProjection;
 	private JLabel lblProjectionType;
 
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public NewMovieTheaterFrame() {
+	public Update3DMovieTheaterFrame() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 416, 518);
 		ImageIcon frameIcon=new ImageIcon(getClass().getResource("/images/bobines-video-icon.png"));

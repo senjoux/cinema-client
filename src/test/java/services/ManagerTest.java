@@ -47,9 +47,8 @@ public class ManagerTest {
 	}
 	
 	@Test
-	@Ignore
 	public void deleteManager(){
-		Manager m=ManagerServiceDelegate.findManagerByID(3);
+		Manager m=ManagerServiceDelegate.findManagerByID(13);
 		assertEquals(true,ManagerServiceDelegate.deleteManager(m));
 	}
 

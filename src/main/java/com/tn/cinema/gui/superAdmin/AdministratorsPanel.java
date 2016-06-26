@@ -102,12 +102,7 @@ public class AdministratorsPanel extends JPanel {
 		scrollPane.setBounds(20, 90, 403, 206);
 		add(scrollPane);
 
-		table = new JTable(new AdministratorsModel());/* {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public Class getColumnClass(int column) {
-				return getValueAt(0, column).getClass();
-			}
-		};*/
+		table = new JTable(new AdministratorsModel());
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.addMouseListener(new MouseAdapter() {
 			private BufferedImage image = null;

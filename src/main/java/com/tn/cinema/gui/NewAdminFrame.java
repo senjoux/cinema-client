@@ -43,22 +43,7 @@ public class NewAdminFrame extends JFrame {
 	private WebButton btnCancel;
 	private WebButton btnSave;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewAdminFrame frame = new NewAdminFrame();
-					WebLookAndFeel.install();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.

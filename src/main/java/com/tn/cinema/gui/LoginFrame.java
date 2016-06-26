@@ -21,6 +21,7 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.notification.NotificationIcon;
 import com.alee.managers.notification.WebNotificationPopup;
 import com.alee.managers.style.skin.web.WebLabelPainter;
+import com.tn.cinema.constant.PropertyConstant;
 import com.tn.cinema.controller.MainController;
 import com.tn.cinema.controller.ManagerController;
 import com.tn.cinema.entities.User;
@@ -38,34 +39,16 @@ public class LoginFrame extends WebFrame {
 	private WebTextField txtEmail;
 	private WebPasswordField txtPassword;
 	private WebButton btnLogin;
-	private WebLabel lblSignUpContainer;
 	private WebLabel lblLogInContainer;
-	private WebButton btnSignUp;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				WebLookAndFeel.install ();
-				try {
-					LoginFrame frame = new LoginFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		setTitle("MallaFilm");
+		setTitle(PropertyConstant.MALLA_CINEMA);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 477, 201);
+		setBounds(100, 100, 332, 201);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		ImageIcon frameIcon=new ImageIcon(getClass().getResource("/images/bobines-video-icon.png"));
@@ -75,18 +58,6 @@ public class LoginFrame extends WebFrame {
 		this.setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		// btn sign up
-		btnSignUp = new WebButton("Sign Up", new ImageIcon(getClass().getResource("/images/star-icon.png")));
-		btnSignUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ManagerController.showNewManagerFrame();
-				dispose();
-			}
-		});
-		btnSignUp.setLocation(322, 36);
-		btnSignUp.setSize(98, 24);
-		contentPane.add(btnSignUp);
 
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/images/Security-icon.png")));
@@ -136,18 +107,8 @@ public class LoginFrame extends WebFrame {
 		lblLogInContainer.setVerticalAlignment(SwingConstants.TOP);
 		lblLogInContainer.setLocation(10, 11);
 		lblLogInContainer.setSize(293, 143);
-		lblLogInContainer.setPainter(new WebLabelPainter(new TitledBorderPainter("Hello again, "))).setMargin(5);
+		lblLogInContainer.setPainter(new WebLabelPainter(new TitledBorderPainter("Hello, "))).setMargin(5);
 		contentPane.add(lblLogInContainer);
-
-		// lbl sign in container
-		lblSignUpContainer = new WebLabel();
-		lblSignUpContainer.setDrawShade(true);
-		lblSignUpContainer.setToolTipText("");
-		lblSignUpContainer.setVerticalAlignment(SwingConstants.TOP);
-		lblSignUpContainer.setLocation(313, 11);
-		lblSignUpContainer.setSize(138, 58);
-		lblSignUpContainer.setPainter(new WebLabelPainter(new TitledBorderPainter(" New here ?"))).setMargin(5);
-		contentPane.add(lblSignUpContainer);
 
 		
 	}

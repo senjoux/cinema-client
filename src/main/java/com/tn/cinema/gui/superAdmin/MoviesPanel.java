@@ -2,7 +2,6 @@ package com.tn.cinema.gui.superAdmin;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,9 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.EtchedBorder;
 
-import com.alee.extended.image.WebDecoratedImage;
 import com.alee.extended.painter.BorderPainter;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
@@ -24,80 +21,91 @@ import com.alee.laf.text.WebTextField;
 import com.alee.managers.style.skin.web.WebLabelPainter;
 import com.tn.cinema.constant.PropertyConstant;
 import com.tn.cinema.controller.SuperAdminController;
-import com.tn.cinema.model.ManagersModel;
+import com.tn.cinema.model.MoviesModel;
 import com.tn.cinema.utility.NotificationsManager;
 import com.tn.cinema.utility.Utils;
 
-public class ManagersPanel extends JPanel {
+public class MoviesPanel extends JPanel {
 
 	private JTable table;
 	private JScrollPane scrollPane;
 	private WebTextField txtX;
 	private WebButton btnSearch;
 	private WebButton btnReload;
-	private WebDecoratedImage profileImg;
-	WebButton bntNew;
+	private WebButton btnPoster;
+	private WebButton bntNew;
 	private WebButton btnUpdate;
 	private WebButton bntRemove;
+	private BufferedImage image = null;
 	private WebLabel lblSelectedManagerContainer;
 	private WebLabel lblUtilityContainer;
 
 	@SuppressWarnings("rawtypes")
-	public ManagersPanel() {
+	public MoviesPanel() {
 		setBounds(10, 11, 600, 384);
 		setLayout(null);
 
 		bntRemove = new WebButton(PropertyConstant.DELETE,
-				new ImageIcon(getClass().getResource("/images/deleteuser.png")));
+				new ImageIcon(getClass().getResource("/images/remove.png")));
 		bntRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (table.getSelectedRow() >= 0) {
-					ManagersModel.setSelectedManager(table.getSelectedRow());
-					boolean res=SuperAdminController.deleteManager(ManagersModel.getSelectedManager());
+					MoviesModel.setSelectedMovie(table.getSelectedRow());
+					boolean res=SuperAdminController.deleteMovie(MoviesModel.getSelectedMovie());
 					if (res) {
-						NotificationsManager.displayDeleteSuccessPopUp("Manager");
-						SuperAdminController.loadManagers();
+						NotificationsManager.displayDeleteSuccessPopUp("Movie");
+						SuperAdminController.loadMovies();
 					}else {
-						NotificationsManager.displayDeleteErrorPopUp("manager");
+						NotificationsManager.displayDeleteErrorPopUp("movie");
 					}
 				} else {
-					NotificationsManager.displaySelectPopUp("manager");
+					NotificationsManager.displaySelectPopUp("movie");
 				}
 			}
 		});
 		
-		bntNew = new WebButton(PropertyConstant.NEW, new ImageIcon(getClass().getResource("/images/newuser.png")));
+		bntNew = new WebButton(PropertyConstant.NEW, new ImageIcon(getClass().getResource("/images/create.png")));
 		bntNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SuperAdminController.showNewManagerFrame();
+				SuperAdminController.showNewMovieFrame();
 			}
 		});
-		bntNew.setBounds(323, 53, 91, 26);
+		
+		btnPoster = new WebButton(PropertyConstant.COVER,new ImageIcon(getClass().getResource("/images/poster.png")));
+				btnPoster.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {	
+						if (table.getSelectedRow() >= 0) {
+							MoviesModel.setSelectedMovie(table.getSelectedRow());
+							image= Utils.convertToImage(MoviesModel.getSelectedMovie().getCover());
+							SuperAdminController.showMovieCoverFrame(image);
+						} else {
+							NotificationsManager.displaySelectPopUp("movie");
+						}
+					}
+				});
+				btnPoster.setBottomBgColor(Color.YELLOW);
+				btnPoster.setLocation(454, 100);
+				btnPoster.setSize(118, 36);
+				add(btnPoster);
+		bntNew.setBounds(466, 221, 91, 26);
 		add(bntNew);
-		bntRemove.setBounds(466, 243, 91, 26);
+		bntRemove.setBounds(466, 191, 91, 26);
 		add(bntRemove);
 
 		btnUpdate = new WebButton(PropertyConstant.UPDATE, new ImageIcon(getClass().getResource("/images/tool.png")));
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (table.getSelectedRow() >= 0) {
-					ManagersModel.setSelectedManager(table.getSelectedRow());
-					SuperAdminController.showUpdateManagerFrame(ManagersModel.getSelectedManager());
+					MoviesModel.setSelectedMovie(table.getSelectedRow());
+					SuperAdminController.showUpdateMovieFrame(MoviesModel.getSelectedMovie());
 				} else {
 					NotificationsManager.displaySelectPopUp("manager");
 				}
 			}
 		});
-		btnUpdate.setBounds(466, 213, 91, 26);
+		btnUpdate.setBounds(466, 159, 91, 26);
 		add(btnUpdate);
 
-		ImageIcon defaultUserIcon = new ImageIcon(getClass().getResource("/images/defaultUser.png"));
-		profileImg = new WebDecoratedImage(defaultUserIcon);
-		profileImg.setBorderColor(Color.BLACK);
-		profileImg.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.DARK_GRAY, null));
-		profileImg.setShadeWidth(5);
-		profileImg.setBounds(456, 102, 111, 105);
-		add(profileImg);
 
 		lblSelectedManagerContainer = new WebLabel();
 		lblSelectedManagerContainer.setShadeColor(Color.DARK_GRAY);
@@ -110,16 +118,15 @@ public class ManagersPanel extends JPanel {
 		scrollPane.setBounds(20, 90, 403, 206);
 		add(scrollPane);
 
-		table = new JTable(new ManagersModel());
+		table = new JTable(new MoviesModel());
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.addMouseListener(new MouseAdapter() {
-			private BufferedImage image = null;
+			
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ManagersModel.setSelectedManager(table.getSelectedRow());
-				image = Utils.convertToImage(ManagersModel.getSelectedManager().getImage());
-				profileImg.setImage(image.getScaledInstance(121, 117, Image.SCALE_DEFAULT));
+				MoviesModel.setSelectedMovie(table.getSelectedRow());
+				image = Utils.convertToImage(MoviesModel.getSelectedMovie().getCover());
 			}
 		});
 		scrollPane.setViewportView(table);
@@ -136,7 +143,7 @@ public class ManagersPanel extends JPanel {
 				new ImageIcon(getClass().getResource("/images/search-icon.png")));
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SuperAdminController.loadManagers(txtX.getText());
+				SuperAdminController.loadMovies(txtX.getText());
 			}
 		});
 		btnSearch.setBounds(32, 16, 91, 26);
@@ -145,12 +152,12 @@ public class ManagersPanel extends JPanel {
 		btnReload = new WebButton(PropertyConstant.RELOAD, new ImageIcon(getClass().getResource("/images/reload.png")));
 		btnReload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SuperAdminController.loadManagers();
+				SuperAdminController.loadMovies();
 			}
 		});
 		btnReload.setBounds(32, 53, 91, 26);
 		add(btnReload);
-
+		
 		lblUtilityContainer = new WebLabel();
 		lblUtilityContainer.setLocation(20, 11);
 		lblUtilityContainer.setSize(403, 73);
@@ -162,4 +169,5 @@ public class ManagersPanel extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
+
 }

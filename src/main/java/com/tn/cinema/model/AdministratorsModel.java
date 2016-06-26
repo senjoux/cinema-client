@@ -18,15 +18,12 @@ public class AdministratorsModel extends AbstractTableModel {
 	public AdministratorsModel() {
 		administrators = AdministratorServiceDelegate.findAllAdministrators();
 		fireTableDataChanged();
-		System.out.println(administrators.size() + " administartors");
 
 	}
 	
 	public AdministratorsModel(String X) {
 		administrators = Utils.fetchAdminsByCriteria(AdministratorServiceDelegate.findAllAdministrators(), X);
 		fireTableDataChanged();
-		System.out.println(administrators.size() + " administartors");
-
 	}
 
 	@Override
