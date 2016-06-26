@@ -52,24 +52,6 @@ public class UpdateAdminFrame extends JFrame {
 	private File file = null;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				WebLookAndFeel.install();
-				try {
-					UpdateAdminFrame frame = new UpdateAdminFrame(
-							AdministratorServiceDelegate.findAdministratorByID(1));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public UpdateAdminFrame(Administrator a) {

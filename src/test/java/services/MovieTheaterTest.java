@@ -55,7 +55,7 @@ public class MovieTheaterTest {
 	@Test
 	@Ignore
 	public void deleteMovieTheater() {
-		MovieTheater mt = MovieTheaterServiceDelegate.findMovieTheaterByID(3);
+		MovieTheater mt = MovieTheaterServiceDelegate.findMovieTheaterByID(1);
 		assertEquals(true,MovieTheaterServiceDelegate.deleteMovieTheater(mt));
 	}
 	

@@ -9,19 +9,19 @@ import com.tn.cinema.delegate.ManagerServiceDelegate;
 import com.tn.cinema.entities.Manager;
 import com.tn.cinema.utility.Utils;
 
-public class ManagersModel extends AbstractTableModel {
+public class TheaterManagersModel extends AbstractTableModel {
 
 	private static List<Manager> managers;
-	private final String[] headers = { "First name", "Name", "Email", "Phone", "Locked", "Theater" };
+	private final String[] headers = { "First name", "Name", "Email"};
 	private static Manager selectedManager;
 
-	public ManagersModel() {
-		managers = ManagerServiceDelegate.findAllManagers();
+	public TheaterManagersModel() {
+		managers = Utils.fetchManagersAreLocked(ManagerServiceDelegate.findAllManagers(), false);
 		fireTableDataChanged();
 	}
 
-	public ManagersModel(String X) {
-		managers = Utils.fetchManagersByCriteria(ManagerServiceDelegate.findAllManagers(), X);
+	public TheaterManagersModel(String X) {
+		managers = Utils.fetchManagersByCriteria(Utils.fetchManagersAreLocked(ManagerServiceDelegate.findAllManagers(), false), X);
 		fireTableDataChanged();
 	}
 
@@ -48,14 +48,6 @@ public class ManagersModel extends AbstractTableModel {
 			return managers.get(rowIndex).getName();
 		case 2:
 			return managers.get(rowIndex).getEmail();
-		case 3:
-			return managers.get(rowIndex).getMobilePhone().toString();
-		case 4:
-			return managers.get(rowIndex).isLocked() ? new ImageIcon(getClass().getResource("/images/tiny_on.png"))
-					: new ImageIcon(getClass().getResource("/images/tiny_off.png"));
-		case 5:
-				return managers.get(rowIndex).getMovieTheaters().isEmpty() ? "	-	"
-						: managers.get(rowIndex).getMovieTheaters().get(0).getName();
 		default:
 			return null;
 		}

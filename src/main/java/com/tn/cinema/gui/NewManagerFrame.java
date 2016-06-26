@@ -24,8 +24,8 @@ import com.alee.laf.slider.WebSlider;
 import com.alee.laf.text.WebPasswordField;
 import com.alee.laf.text.WebTextField;
 import com.tn.cinema.constant.PropertyConstant;
-import com.tn.cinema.controller.MainController;
 import com.tn.cinema.controller.ManagerController;
+import com.tn.cinema.controller.SuperAdminController;
 import com.tn.cinema.utility.NotificationsManager;
 import com.tn.cinema.utility.ValidatorsManager;
 
@@ -55,22 +55,6 @@ public class NewManagerFrame extends JFrame {
 	private WebButton btnSave;
 
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				WebLookAndFeel.install();
-				try {
-					NewManagerFrame frame = new NewManagerFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -78,7 +62,6 @@ public class NewManagerFrame extends JFrame {
 	public NewManagerFrame() {
 		setBounds(100, 100, 444, 276);
 		ImageIcon frameIcon = new ImageIcon(getClass().getResource("/images/bobines-video-icon.png"));
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setIconImage(frameIcon.getImage());
 		buildNewManagerPanel(); 
 		setContentPane(newManagerPanel);
@@ -190,9 +173,7 @@ public class NewManagerFrame extends JFrame {
 				new ImageIcon(getClass().getResource("/images/Cancel-icon.png")));
 		btnCancelManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ManagerController.disposeNewManagerFrame();
-				MainController.startTheApp();
-				ManagerController.disposeNewManagerFrame();
+				SuperAdminController.disposeNewManagerFrame();
 			}
 		});
 		btnCancelManager.setBounds(321, 210, 91, 23);
@@ -220,7 +201,7 @@ public class NewManagerFrame extends JFrame {
 									txtEmail.getText(), String.valueOf(txtPassword.getPassword()),
 									txtMobilePhone.getText(), file);
 							if(res){			
-								NotificationsManager.displaySignUpSuccessPopUp();
+								NotificationsManager.displayCreatedSuccessPopUp("Manager");
 							}else {
 								NotificationsManager.displayAccountErrorPopUp();
 							}
